@@ -8,6 +8,7 @@ This is my personal portfolio website that I've chosen to open source so that yo
 - Image Minifier (gulp-imagemin)
 - CSS + JS File Includes (gulp-include)
 - [Browsersync](http://www.browsersync.io) for live coding (browser-sync)
+
 ### Getting it running
 --- 
 **Install dependencies:**
