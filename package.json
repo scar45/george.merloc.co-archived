@@ -1,0 +1,33 @@
+{
+  "name": "george-merloc-co-web",
+  "version": "0.0.1",
+  "description": "Personal portfolio website of George Merlocco",
+  "author": "George Merlocco",
+  "contributors": [
+    "George Merlocco <george@merloc.co>"
+  ],
+  "private": true,
+  "license": "MIT",
+  "repository" :
+  { "type" : "git",
+    "url" : "https://github.com/scar45/george.merloc.co.git"
+  },
+  "bugs": {
+    "url": "https://github.com/scar45/george.merloc.co/issues",
+    "email": "george@merloc.co"
+  },
+  "devDependencies": {
+    "browser-sync": "*",
+    "del": "*",
+    "gulp": "*",
+    "gulp-file-include": "*",
+    "gulp-imagemin": "*",
+    "gulp-include-source": "*",
+    "gulp-jquery": "*",
+    "gulp-sass": "*",
+    "gulp-sourcemaps": "*",
+    "jquery": "*",
+    "node-sass": "*",
+    "run-sequence": "*"
+  }
+}

@@ -1,45 +1,90 @@
+var gulp = require('gulp'),
+    del = require('del'),
+    runSequence = require('run-sequence'),
+    includeSources = require("gulp-include-source"),
+    sourcemaps = require('gulp-sourcemaps'),
+    fileInclude = require("gulp-file-include"),
+    sass = require('gulp-sass'),
+    jquery = require('gulp-jquery'),
+    imagemin = require('gulp-imagemin'),
+    browserSync = require('browser-sync'),
+    reload = browserSync.reload;
+
 'use strict';
 
-var gulp = require('gulp');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
-var fileInclude = require("gulp-file-include");
+gulp.task('clean', function() {
+    return del('./build');
+});
+
 
 gulp.task('html', function() {
-    console.log("-- gulp is running task 'html'");
-    gulp.src( './app/template/index.html' )
+    return gulp.src( './sauce/template/index.html' )
+    .pipe( includeSources({cwd: 'build/'}) )
     .pipe( fileInclude({
         prefix: '@@',
         basepath: '@file'
     }))
-    .pipe( gulp.dest('./app') );
+    .pipe(gulp.dest('./build/'));
 });
+
+gulp.task('images', function() {
+    // Quick 5s delay to let Gimp/editor finish writing the image
+    setTimeout(function() {
+        gulp.src(['sauce/images/*.jpg', './sauce/images/*.png'])
+            .pipe(imagemin({ progressive: true }))
+            .pipe(gulp.dest('./build/images'));
+    }, 5000);
+});
+
 gulp.task('sass', function () {
-    console.log("-- gulp is running task 'sass'");
-    gulp.src('./app/styles/**/*.scss')
-    //.pipe(include())
+    gulp.src('./sauce/css/**/*.scss')
     .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
     .pipe(sourcemaps.write('.', {includeContent: false, debug: true}))
-    .pipe(gulp.dest('./app/styles'));
+    .pipe(gulp.dest('./build/css/'));
 });
 
-gulp.task('sass:watch', function () {
-    console.log("-- gulp is running task 'sass:watch'");
-    gulp.watch('./styles/**/*.scss', ['sass']);
+gulp.task('sassNoMap', function () {
+    gulp.src('./sauce/css/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./build/css/'));
 });
 
-// watch files for changes and reload
-    console.log("-- gulp is running task 'serve'");
-    gulp.task('serve', ['sass:watch','html'], function() {
+gulp.task('scripts', ['jquery'], function() {
+    return gulp.src("./sauce/js/gm.js")
+        .on('error', console.log)
+        .pipe(gulp.dest("./build/js"));
+});
+
+gulp.task('jquery', function () {
+    return jquery.src({
+        release: 1, //jQuery v1 or v2
+        flags: ['-deprecated', '-event/alias', '-ajax/script', '-ajax/jsonp', '-exports/global']
+    })
+    // creates ./build/js/vendor/jquery.custom.js
+    .pipe(gulp.dest('./build/js/vendor/'));
+});
+
+gulp.task('watch', function () {
+    gulp.watch(['sauce/images/**/*.jpg', 'sauce/images/**/*.png'], ['images']);
+    gulp.watch(['sauce/css/**/*.scss'], ['sass']);
+    gulp.watch(['sauce/template/*.html', 'sauce/template/partials/*.phtml'], ['html']);
+});
+
+// Main task to run during development -- starts a server and watches for changes
+gulp.task('liveCoding', ['sass', 'html', 'images', 'scripts', 'watch'], function() {
     browserSync({
         server: {
-            baseDir: 'app'
+            baseDir: 'build'
         }
     });
-    gulp.watch(['./app/template/*.html','./app/template/partials/*.phtml'], ['html'], reload);
-    gulp.watch(['./app/styles/**/*.scss'], ['sass']);
-    gulp.watch(['*.html', 'styles/**/*.css', 'scripts/**/*.js'], {cwd: 'app'}, reload);
+    // Refreshes the dev URL
+    gulp.watch(['build/css/**/*.css', 'build/js/**/*.js', 'build/images/**/*.jpg', 'build/images/**/*.png', 'build/**/*.html'], reload);
+});
+
+gulp.task('release', ['clean'], function() {
+
+    // Note that run-sequence may be deprecated once gulp 4.0 is released with magic
+    //      support for defining task dependencies in series or in parallel.
+    runSequence('sassNoMap', 'scripts', 'images', 'html');
 });
