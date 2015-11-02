@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
     del = require('del'),
+    combiner = require('stream-combiner2'),
     runSequence = require('run-sequence'),
     includeSources = require("gulp-include-source"),
     sourcemaps = require('gulp-sourcemaps'),
@@ -7,6 +8,8 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     jquery = require('gulp-jquery'),
     imagemin = require('gulp-imagemin'),
+    rename = require('gulp-rename'),
+    uglify = require('gulp-uglify'),
     browserSync = require('browser-sync'),
     reload = browserSync.reload;
 
@@ -51,9 +54,20 @@ gulp.task('sassNoMap', function () {
 });
 
 gulp.task('scripts', ['jquery'], function() {
-    return gulp.src("./sauce/js/gm.js")
-        .on('error', console.log)
-        .pipe(gulp.dest("./build/js"));
+    var combined = combiner.obj([
+        gulp.src("./sauce/js/gm.js"),
+        uglify(),
+        rename({ extname: '.min.js' }),
+        gulp.dest("./build/js"),
+
+        // TODO: Look into why sourcemap is not generated
+        sourcemaps.init( {loadmaps: false} ),
+            gulp.dest("./build/js"),
+        sourcemaps.write('.', {includeContent: false, debug: true})
+    ]);
+    combined.on('error', console.error.bind(console));
+
+    return combined;
 });
 
 gulp.task('jquery', function () {
