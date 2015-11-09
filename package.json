@@ -8,9 +8,9 @@
   ],
   "private": true,
   "license": "MIT",
-  "repository" :
-  { "type" : "git",
-    "url" : "https://github.com/scar45/george.merloc.co.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scar45/george.merloc.co.git"
   },
   "bugs": {
     "url": "https://github.com/scar45/george.merloc.co/issues",
@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "browser-sync": "*",
-    "del": "*",
+    "del": "~2.0.2",
     "gulp": "*",
     "gulp-file-include": "*",
     "gulp-imagemin": "*",
@@ -28,6 +28,7 @@
     "gulp-sourcemaps": "*",
     "jquery": "*",
     "node-sass": "*",
-    "run-sequence": "*"
+    "run-sequence": "*",
+    "gulp-cssmin": "~0.1.7"
   }
 }

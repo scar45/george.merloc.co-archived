@@ -3,6 +3,7 @@
 
 // Javascript Open in New Window (validation workaround)
 //
+
 function externalLinks() {
     if (!document.getElementsByTagName) return;
     var anchors = document.getElementsByTagName("a");
@@ -14,13 +15,6 @@ function externalLinks() {
     }
 }
 
-// Alternate new window for social sharing links (more config options)
-//
-function newWindow(uri,width,height) {
-    if(!window.open(uri,uri,'scrollbars=1,toolbar=0,resizable=1,status=0,width='+width+',height='+height)) {
-        document.location.href=uri;
-    }
-}
 
 // Execute when the DOM is ready
 //
