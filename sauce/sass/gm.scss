@@ -6,6 +6,10 @@ body {
 h1 {
   color: #0ff;
   background: #f0f;
+
+  &:hover {
+    background: #404;
+  }
 }
 
 p {
