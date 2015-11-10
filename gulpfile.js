@@ -90,13 +90,13 @@ gulp.task('scripts', function() {
 
 gulp.task('images', function() {
     // Quick 5s delay to let Gimp/editor finish writing the image
-    //setTimeout(function() {
+    setTimeout(function() {
         return gulp.src(config.paths.images.src)
             .pipe(imagemin({
                 progressive: true
             }))
             .pipe(gulp.dest(config.paths.images.dest));
-    //}, 5000);
+    }, 5000);
 });
 
 gulp.task('liveCoding', function() {
