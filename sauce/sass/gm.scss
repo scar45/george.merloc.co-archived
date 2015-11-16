@@ -1,26 +1,8 @@
-body {
-  background: #405;
-  color: #f0f;
-}
+// SCSS file for http://george.merloc.co
+//
 
-h1 {
-  color: #0ff;
-  background: #f0f;
-
-  &:hover {
-    background: #404;
-  }
-}
-
-p {
-  color: #0dd;
-}
-
-a {
-  color: #b0b;
-}
-
-a:hover {
-  color: #f0f;
-  background: #0ff;
-}
+@import "includes/reset";
+@import "includes/pushy";
+@import "includes/fonts";
+@import "includes/variables";
+@import "includes/base";

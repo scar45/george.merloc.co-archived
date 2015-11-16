@@ -3,22 +3,30 @@
     "description": "The personal site of George Merlocco (http://george.merloc.co)"
 })
 
-<div id="header-container">
+@@include('./partials/nav.phtml', { "activeNavHome": "active" })
+
+<div id="header-container" class="push">
     <header class="wrapper clearfix">
         <h1 id="title">Welcome to the Circling Sharks &lt;3</h1>
         <h3>Official Band page!</h3>
         <hr>
-
-        @@include('./partials/nav.phtml', { "activeNavHome": "active" })
-
     </header>
 </div>
-<div id="main-container">
+
+<div id="container">
+    <!-- Menu Button -->
+    <div class="menu-btn">&#9776; Menu</div>
+
     <div id="main" class="wrapper clearfix">
 
         <article>
-            <header>
+            <header class="font-roboto">
                 <h1>Our Sweet Poster</h1>
+                <h2>Our Sweet Poster</h2>
+                <h3>Our Sweet Poster</h3>
+                <h4>Our Sweet Poster</h4>
+                <h5>Our Sweet Poster</h5>
+                <h6>Our Sweet Poster</h6>
                 <p><img src="images/circling-sharks.jpg" alt="Circling Sharks" /></p>
             </header>
             <section>

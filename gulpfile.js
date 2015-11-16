@@ -17,25 +17,31 @@ var config = {
         html: {
             src:  "sauce/template/**/*.html",
             partialsrc:  "sauce/template/partials/**/*.phtml",
-            dest: "build",
+            dest: "build"
         },
         javascript: {
-            src:  ["sauce/js/**/*.js"],
+            src:  "sauce/js/**/*.js",
             dest: "build/js",
-            vendorSrc: "bower_components/jquery/dist/jquery.min.js",
+            vendorSrc: ["bower_components/jquery/dist/jquery.min.js","bower_components/pushy/js/pushy.min.js"],
             vendorDest: "build/js/vendor/"
         },
         images: {
             src: ["sauce/images/**/*.jpg", "sauce/images/**/*.jpeg", "sauce/images/**/*.png"],
             dest: "build/images"
         },
+        css: {
+            src: ["build/css/**/*.css"],
+            dest: "build/css"
+        },
         sass: {
-            src: ["sauce/sass/**/*.scss", "!sauce/sass/includes/**"],
+            src: ["sauce/sass/**/*.scss", "sauce/sass/includes/**/*.scss"],
             dest: "build/css"
         },
         untouched: {
-            src: ["sauce/favicon.png"],
-            dest: "build"
+            src: "sauce/favicon.png",
+            dest: "build",
+            fontSrc: "sauce/fonts/**/*",
+            fontDest: "build/fonts"
         }
     }
 };
@@ -47,11 +53,10 @@ gulp.task('clean', function() {
 gulp.task("untouched", function(){
     gulp.src(config.paths.untouched.src)
         .pipe(gulp.dest(config.paths.untouched.dest));
-});
-
-gulp.task('jquery', function() {
-    return gulp.src(config.paths.javascript.vendorSrc)
-        .pipe(gulp.dest(config.paths.javascript.vendorDest))
+    gulp.src(config.paths.untouched.fontSrc)
+        .pipe(gulp.dest(config.paths.untouched.fontDest));
+    gulp.src(config.paths.javascript.vendorSrc)
+        .pipe(gulp.dest(config.paths.javascript.vendorDest));
 });
 
 gulp.task('html', ['sass', 'scripts', 'images'], function() {
@@ -68,12 +73,18 @@ gulp.task('html', ['sass', 'scripts', 'images'], function() {
         .pipe(gulp.dest(config.paths.html.dest));
 });
 
+gulp.task('css', ['sass'], function () {
+    return gulp.src(config.paths.css.src)
+        .pipe(concat("gm.min.css"))
+        .pipe(minifyCss())
+        .pipe(gulp.dest(config.paths.css.dest))
+        .pipe(browserSync.reload({stream: true}));
+});
+
 gulp.task('sass', function () {
     return gulp.src(config.paths.sass.src)
         .pipe(sourcemaps.init())
             .pipe(sass().on('error', sass.logError))
-            .pipe(minifyCss())
-            .pipe(rename({ extname: '.min.css' }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(config.paths.sass.dest))
         .pipe(browserSync.reload({stream: true}));
@@ -103,15 +114,16 @@ gulp.task('liveCoding', function() {
     // Quick 3s delay to allow all tasks to complete
     setTimeout(function() {
         browserSync({
-           server: {
-               baseDir: './build'
-           }
+            server: {
+                baseDir: './build'
+            },
+            reloadDelay: 1000
         });
     }, 3000);
 
 });
 
-gulp.task('build', ['untouched', 'jquery', 'html']);
+gulp.task('build', ['untouched', 'html']);
 
 gulp.task('default', ['build', 'liveCoding'], function(){
     gulp.watch([config.paths.html.src, config.paths.html.partialsrc], ['html', browserSync.reload]);

@@ -1,0 +1,150 @@
+// Main SASS file for http://george.merloc.co
+//
+
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+// Mobile and Desktop only classes 
+
+@include respond-to(small-only) {
+    // Prevent scrolling while mobile nav is open
+    html, body {
+        overflow-x: hidden;
+        height: 100%;
+    }
+    .desktop-only {
+        display: none;
+    }
+}
+
+@include respond-to(medium) {
+
+    html, body {
+        height:100%;
+        width:100%;
+        overflow-x: hidden;
+    }
+    .mobile-only {
+        display: none;
+    }
+}
+
+.clearfix {
+    clear: both;
+}
+
+a {
+    text-decoration: none;
+}
+
+@mixin link-transition {
+    -webkit-transition: all 280ms ease-in-out;
+    -moz-transition: all 280ms ease-in-out;
+    -ms-transition: all 280ms ease-in-out;
+    -o-transition: all 280ms ease-in-out;
+    transition: all 280ms ease-in-out;
+}
+
+@mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+@mixin horizontal-align($position: relative) {
+  position: $position;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+@mixin box-shadow {
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+@mixin text-shadow {
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+::-moz-selection {
+    background: $color-yellow;
+    text-shadow: none;
+    color: $color-black;
+}
+
+::selection {
+    background: $color-yellow;
+    text-shadow: none;
+    color: $color-black;
+}
+
+// Main site skin
+//
+
+body {
+  background: #405;
+  color: #f0f;
+}
+
+h1 {
+  color: #0ff;
+  background: #f0f;
+  font-family: chunkfive;
+  font-weight: bold;
+
+  &:hover {
+    background: #404;
+  }
+}
+
+h2 {
+  font-family: chunkfive;
+  font-weight: normal;
+  font-style: italic;
+}
+
+h3 {
+  font-family: chunkfive;
+  font-weight: normal;
+  font-style: italic;
+}
+
+h4 {
+  font-family: chunkfive;
+  font-weight: normal;
+}
+
+h5 {
+  font-family: chunkfive;
+  font-weight: normal;
+}
+
+h6 {
+  font-family: chunkfive;
+  font-weight: normal;
+}
+
+p {
+  color: #0dd;
+}
+
+a {
+  color: #b0b;
+}
+
+a:hover {
+  color: #f0f;
+  background: #0ff;
+}
+
+.wrapper {
+  margin: 1rem;
+}

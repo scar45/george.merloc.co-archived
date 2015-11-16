@@ -1,0 +1,64 @@
+// SASS Variables file for http://george.merloc.co
+//
+// Colors
+
+$color-white: #fff;
+$color-off-white: #f7f7f4;
+$color-black: #000;
+$color-grey: #888;
+$color-light-grey: #CFCFCF;
+$color-dark-grey: #555;
+$color-darker-grey: #222;
+$color-gold: #a96c16;
+$color-yellow: #FFED00;
+
+// Breakpoints
+// See example usage @ http://sassmeister.com/gist/0614ac3971ae82925ef4
+//
+// Use these via:
+//
+//      @include respond-to(---breakpoint_name---) { };
+//
+
+$breakpoints: (
+
+  'medium'      : '( min-width: 768px)',
+  'large'       : '( min-width: 1024px)',
+  'xlarge'      : '( min-width: 1280px)',
+  'xxlarge'     : '( min-width: 1920px)',
+  
+  'small-only'  : '( min-width: 1px) and ( max-width: 767px)',
+  'medium-only' : '( min-width: 768px) and ( max-width: 1023px)',
+  'large-only'  : '( min-width: 1024px) and ( max-width: 1279px)'
+  
+);
+  
+@mixin respond-to($name, $push: false) {
+  // If the key exists in the map
+  @if map-has-key($breakpoints, $name) {
+    // Prints a media query based on the value
+    @media #{map-get($breakpoints, $name)} {
+      @content;
+    }
+  }
+ 
+  // If the key doesn't exist in the map
+  // But $push is defined
+  @else if $push != false {
+    // Add the new breakpoint to the map
+    $breakpoints: map-merge($breakpoints, ($name: $push)) !global;
+    // And re-call the mixin normally
+    @include respond-to($name) {
+      @content;
+    }
+  }
+  
+  // If the key doesn't exist in the map
+  // And there is no push
+  @else {
+    // Just warn the user
+    @warn "Unfortunately, no value could be retrieved from `#{$name}`. "
+        + "Please make sure it is defined in `$breakpoints` map. "
+        + "Or pass the media query as a second parameter to add it to the map.";
+  }
+}

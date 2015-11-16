@@ -3,30 +3,28 @@
     "description": "A collection of the things I have built both physical and digital."
 })
 
-<div id="header-container">
+@@include('./partials/nav.phtml', { "activeNavPortfolio": "active" })
+
+<div id="header-container" class="push">
     <header class="wrapper clearfix">
-        <h1 id="title">Welcome to the Circling Sharks</h1>
-        <h3>Official Band page!</h3>
+        <h1 id="title">Circling Sharks Portfolio</h1>
+        <h3>A history of all the kick-ass shows we've played</h3>
         <hr>
-
-        @@include('./partials/nav.phtml', { "activeNavPortfolio": "active" })
-
     </header>
 </div>
-<div id="main-container">
+<div id="container">
+    <!-- Menu Button -->
+    <div class="menu-btn">&#9776; Menu</div>
+
     <div id="main" class="wrapper clearfix">
 
         <article>
             <header>
-                <h1>PORTFLOLIO</h1>
+                <h1>PORTFOLIO</h1>
             </header>
             <section>
-                <h2>RAZOR TV</h2>
-                <p><img src="images/razor-demo-tube.png" alt="RZR" />.</p>
-            </section>
-            <section>
-                <h2>Some extra stuff</h2>
-                <p>Turn it up to 11!</p>
+                <h2>Toronto</h2>
+                <p>We turned it up to 11!</p>
             </section>
             <footer>
                 <h3>Article Footer</h3>
