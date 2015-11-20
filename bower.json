@@ -1,0 +1,14 @@
+{
+  "name": "george-merloc-co",
+  "version": "1.0.0",
+  "authors": [
+    "George Merlocco <george@merloc.co>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "hover": "~2.0.2",
+    "jquery": "~2.1.4",
+    "pushy": "~0.9.2"
+  }
+}

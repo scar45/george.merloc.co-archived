@@ -59,6 +59,9 @@ gulp.task("untouched", function(){
         .pipe(gulp.dest(config.paths.javascript.vendorDest));
 });
 
+// Production release should have CSS processed/minified
+//
+//gulp.task('html', ['css', 'scripts', 'images'], function() {
 gulp.task('html', ['sass', 'scripts', 'images'], function() {
     return gulp.src(config.paths.html.src)
         .pipe( fileInclude({
